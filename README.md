@@ -35,37 +35,52 @@ This is where Etherscan + Machine Learning becomes a powerful combination.
 Below is the complete architecture pipeline:
 
 ```
-        [1] Listen for New Deployments (Etherscan / On-Chain)
+       ┌───────────────────────────────────────────────────────┐  
+       │ [1] Listen for New Deployments (Etherscan / On-Chain) │
+       └──────────────────────────┬────────────────────────────┘
+                                  │
+                                  ▼
+          ┌───────────────────────────────────────────────┐
+          │ [2] Fetch Contract Source Code (Etherscan V2) │
+          └───────────────────────┬───────────────────────┘
+                                  │
+                                  ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │  [3] Static Token Audit (Rule-Based Analysis)           │
+       │    - dangerous patterns (mint, blacklist, trading lock) │
+       │    - taxable functions, honeypot flags                  │
+       │    - suspicious structures                              │
+       └─────────────────┬───────────────────────────────────────┘
                          │
                          ▼
-        [2] Fetch Contract Source Code (Etherscan V2)
+      ┌─────────────────────────────────────────────────────────┐
+      │    [4] ML Feature Extraction                            │ 
+      │      - numeric + binary features                        │ 
+      │      - contract metadata                                │
+      └──────────────────┬──────────────────────────────────────┘
                          │
                          ▼
-        [3] Static Token Audit (Rule-Based Analysis)
-     - dangerous patterns (mint, blacklist, trading lock)
-     - taxable functions, honeypot flags
-     - suspicious structures
+      ┌─────────────────────────────────────────────────────────┐
+      │    [5] Machine Learning Classification                  │
+      │      - RandomForest or Gradient Boosting                │
+      │      - P(rugpull), P(suspicious)                        │ 
+      └──────────────────┬──────────────────────────────────────┘
                          │
                          ▼
-        [4] ML Feature Extraction
-     - numeric + binary features
-     - contract metadata
+      ┌─────────────────────────────────────────────────────────┐
+      │      [6] Deployer Reputation Engine                     │
+      │        - aggregates all contracts by deployer           │
+      │        - ML trust score (0–100)                         │
+      └──────────────────┬──────────────────────────────────────┘
                          │
                          ▼
-        [5] Machine Learning Classification
-     - RandomForest or Gradient Boosting
-     - P(rugpull), P(suspicious)
-                         │
-                         ▼
-        [6] Deployer Reputation Engine
-     - aggregates all contracts by deployer
-     - ML trust score (0–100)
-                         │
-                         ▼
-        [7] Final Output
-     - Token Risk Score + Label
-     - Deployer Reputation Score
-     - JSON Report / Alerts / Dashboard
+      ┌─────────────────────────────────────────────────────────┐
+      │       [7] Final Output                                  │
+      │         - Token Risk Score + Label                      │ 
+      │         - Deployer Reputation Score                     │
+      │         - JSON Report / Alerts / Dashboard              │
+      └─────────────────────────────────────────────────────────┘
+
 ```
 
 This is essentially a **self-contained risk intelligence system**.
