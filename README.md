@@ -35,24 +35,24 @@ This is where Etherscan + Machine Learning becomes a powerful combination.
 Below is the complete architecture pipeline:
 
 ```
-       ┌───────────────────────────────────────────────────────┐  
-       │ [1] Listen for New Deployments (Etherscan / On-Chain) │
-       └──────────────────────────┬────────────────────────────┘
-                                  │
-                                  ▼
-           ┌───────────────────────────────────────────────┐
-           │ [2] Fetch Contract Source Code (Etherscan V2) │
-           └──────────────────────┬────────────────────────┘
-                                  │
-                                  ▼
-       ┌─────────────────────────────────────────────────────────┐     
-       │  [3] Static Token Audit (Rule-Based Analysis)           │
-       │    - dangerous patterns (mint, blacklist, trading lock) │
-       │    - taxable functions, honeypot flags                  │
-       │    - suspicious structures                              │
-       └───────────────────────────┬─────────────────────────────┘
+        ┌───────────────────────────────────────────────────────┐  
+        │ [1] Listen for New Deployments (Etherscan / On-Chain) │
+        └──────────────────────────┬────────────────────────────┘
                                    │
                                    ▼
+            ┌───────────────────────────────────────────────┐
+            │ [2] Fetch Contract Source Code (Etherscan V2) │
+            └──────────────────────┬────────────────────────┘
+                                   │
+                                   ▼
+        ┌─────────────────────────────────────────────────────────┐     
+        │  [3] Static Token Audit (Rule-Based Analysis)           │
+        │    - dangerous patterns (mint, blacklist, trading lock) │
+        │    - taxable functions, honeypot flags                  │
+        │    - suspicious structures                              │
+        └───────────────────────────┬─────────────────────────────┘
+                                    │
+                                    ▼
                   ┌───────────────────────────────────┐
                   │  [4] ML Feature Extraction        │
                   │    - numeric + binary features    │
