@@ -40,46 +40,46 @@ Below is the complete architecture pipeline:
        └──────────────────────────┬────────────────────────────┘
                                   │
                                   ▼
-          ┌───────────────────────────────────────────────┐
-          │ [2] Fetch Contract Source Code (Etherscan V2) │
-          └───────────────────────┬───────────────────────┘
+           ┌───────────────────────────────────────────────┐
+           │ [2] Fetch Contract Source Code (Etherscan V2) │
+           └──────────────────────┬────────────────────────┘
                                   │
                                   ▼
-       ┌─────────────────────────────────────────────────────────┐
+       ┌─────────────────────────────────────────────────────────┐     
        │  [3] Static Token Audit (Rule-Based Analysis)           │
        │    - dangerous patterns (mint, blacklist, trading lock) │
        │    - taxable functions, honeypot flags                  │
        │    - suspicious structures                              │
-       └─────────────────┬───────────────────────────────────────┘
-                         │
-                         ▼
-      ┌─────────────────────────────────────────────────────────┐
-      │    [4] ML Feature Extraction                            │ 
-      │      - numeric + binary features                        │ 
-      │      - contract metadata                                │
-      └──────────────────┬──────────────────────────────────────┘
-                         │
-                         ▼
-      ┌─────────────────────────────────────────────────────────┐
-      │    [5] Machine Learning Classification                  │
-      │      - RandomForest or Gradient Boosting                │
-      │      - P(rugpull), P(suspicious)                        │ 
-      └──────────────────┬──────────────────────────────────────┘
-                         │
-                         ▼
-      ┌─────────────────────────────────────────────────────────┐
-      │      [6] Deployer Reputation Engine                     │
-      │        - aggregates all contracts by deployer           │
-      │        - ML trust score (0–100)                         │
-      └──────────────────┬──────────────────────────────────────┘
-                         │
-                         ▼
-      ┌─────────────────────────────────────────────────────────┐
-      │       [7] Final Output                                  │
-      │         - Token Risk Score + Label                      │ 
-      │         - Deployer Reputation Score                     │
-      │         - JSON Report / Alerts / Dashboard              │
-      └─────────────────────────────────────────────────────────┘
+       └───────────────────────────┬─────────────────────────────┘
+                                   │
+                                   ▼
+                  ┌───────────────────────────────────┐
+                  │  [4] ML Feature Extraction        │
+                  │    - numeric + binary features    │
+                  │    - contract metadata            │
+                  └─────────────────┬─────────────────┘
+                                    │
+                                    ▼
+               ┌─────────────────────────────────────────┐
+               │ [5] Machine Learning Classification     │
+               │   - RandomForest or Gradient Boosting   │
+               │   - P(rugpull), P(suspicious)           │ 
+               └────────────────────┬────────────────────┘
+                                    │
+                                    ▼
+              ┌───────────────────────────────────────────┐
+              │ [6] Deployer Reputation Engine            │
+              │   - aggregates all contracts by deployer  │
+              │   - ML trust score (0–100)                │    
+              └─────────────────────┬─────────────────────┘
+                                    │
+                                    ▼
+                ┌───────────────────────────────────────┐
+                │ [7] Final Output                      │
+                │   - Token Risk Score + Label          │ 
+                │   - Deployer Reputation Score         │
+                │   - JSON Report / Alerts / Dashboard  │
+                └───────────────────────────────────────┘
 
 ```
 
